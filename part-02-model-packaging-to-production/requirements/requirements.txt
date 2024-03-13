@@ -1,6 +1,4 @@
-# We use compatible release functionality
-# to specify acceptable version ranges of our project dependencies. This gives us the flexibility to keep up with small
-# updates/fixes, whilst ensuring we don't install a major update which could introduce backwards incompatible changes.
+
 numpy>=1.21.0,<2.0.0
 pandas>=1.3.5,<2.0.0
 pydantic>=1.8.1,<2.0.0

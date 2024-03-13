@@ -1,13 +1,12 @@
-from pathlib import path 
-from typing import Dict, List, Optional, Sequence 
+from pathlib import Path
+from typing import Dict, List, Optional, Sequence
 
 from pydantic import BaseModel
 from strictyaml import YAML, load
 
-import regression_model 
+import regression_model
 
-
-# Setup project directories
+# Project Directories
 PACKAGE_ROOT = Path(regression_model.__file__).resolve().parent
 ROOT = PACKAGE_ROOT.parent
 CONFIG_FILE_PATH = PACKAGE_ROOT / "config.yml"
@@ -15,27 +14,27 @@ DATASET_DIR = PACKAGE_ROOT / "datasets"
 TRAINED_MODEL_DIR = PACKAGE_ROOT / "trained_models"
 
 
-# Configuration of the application
 class AppConfig(BaseModel):
     """
-    Application-level config
+    Application-level config.
     """
+
     package_name: str
     training_data_file: str
     test_data_file: str
     pipeline_save_file: str
-    
-    
-# Configuration of our training model
+
+
 class ModelConfig(BaseModel):
     """
-    Setup configuration that are relevant to model training and
-    feature engineering.
+    All configuration relevant to model
+    training and feature engineering.
     """
+
     target: str
     variables_to_rename: Dict
-    features: List[str] 
-    test_size: float 
+    features: List[str]
+    test_size: float
     random_state: int
     alpha: float
     categorical_vars_with_na_frequent: List[str]
@@ -53,35 +52,29 @@ class ModelConfig(BaseModel):
     qual_mappings: Dict[str, int]
     exposure_mappings: Dict[str, int]
     garage_mappings: Dict[str, int]
-    finish_mapping: Dict[str, int]
+    finish_mappings: Dict[str, int]
 
 
 class Config(BaseModel):
-    """
-    This class is for mastering config object.
-    """
-    
+    """Master config object."""
+
     app_config: AppConfig
     model_config: ModelConfig
-    
+
 
 def find_config_file() -> Path:
-    """
-    This function is to locatate the configuration file.
-    """
-    
+    """Locate the configuration file."""
     if CONFIG_FILE_PATH.is_file():
         return CONFIG_FILE_PATH
     raise Exception(f"Config not found at {CONFIG_FILE_PATH!r}")
 
 
 def fetch_config_from_yaml(cfg_path: Optional[Path] = None) -> YAML:
-    """
-    Parse YAML containing the package configuration
-    """
+    """Parse YAML containing the package configuration."""
+
     if not cfg_path:
         cfg_path = find_config_file()
-    
+
     if cfg_path:
         with open(cfg_path, "r") as conf_file:
             parsed_config = load(conf_file.read())
