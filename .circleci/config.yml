@@ -30,7 +30,7 @@ fetch_data: &fetch_data
       ./scripts/fetch_kaggle_dataset.sh
 
 jobs:
-  section_07_test_app:
+  part_04_test_app:
     <<: *defaults
     working_directory: ~/project/part-04-cicd-pipeline-circleci/price-prediction-api
     steps:
@@ -267,14 +267,14 @@ workflows:
   version: 2
   deploy_pipeline:
     jobs:
-      - section_07_test_app
-      - section_07_deploy_app_to_railway:
+      - part_04_test_app
+      - part_04_deploy_app_to_railway:
           requires:
-            - section_07_test_app
+            - part_04_test_app
           filters:
             branches:
               only:
-                - master
+                - main
                 - demo
       # upload after git tags are created
       - section_07_test_and_upload_regression_model:
@@ -284,58 +284,6 @@ workflows:
          filters:
            branches:
              only:
-               - master
+               - main
                - demo
 
-#  test-all:
-#    jobs:
-#      - test_regression_model_py36
-#      - test_regression_model_py37
-#      - test_regression_model_py38
-#      - test_ml_api_py36
-#      - test_ml_api_py37
-#      # - test_ml_api_py38 pending NN model update
-#      - section_9_differential_tests
-#      - train_and_upload_regression_model:
-#          requires:
-#            - test_regression_model_py36
-#            - test_regression_model_py37
-#            - test_regression_model_py38
-#            - test_ml_api_py36
-#            - test_ml_api_py37
-#            - section_9_differential_tests
-#          filters:
-#            branches:
-#              only:
-#                - master
-#       - section_10_deploy_to_heroku:
-#           requires:
-#             - train_and_upload_regression_model
-#           filters:
-#             branches:
-#               only:
-#                 - master
-#      - section_11_build_and_push_to_heroku_docker:
-#          requires:
-#            - train_and_upload_regression_model
-#          filters:
-#            branches:
-#              only:
-#                - master
-#       - section_12_publish_docker_image_to_aws:
-#           requires:
-#             - train_and_upload_regression_model
-#           filters:
-#             branches:
-#               only:
-#                 - master
-#      - section_13_train_and_upload_neural_network_model:
-#          requires:
-#            - test_regression_model
-#            - test_ml_api
-#            - section_9_differential_tests
-#             - train_and_upload_regression_model
-#           filters:
-#             branches:
-#               only:
-#                 - master
