@@ -3,7 +3,7 @@ FROM python:3.11
 # Create the user that will run the app
 RUN adduser --disabled-password --gecos '' ml-api-user
 
-WORKDIR /opt/house-prices-api
+WORKDIR /opt/price-prediction-api
 
 ARG PIP_EXTRA_INDEX_URL
 
