@@ -29,6 +29,13 @@ fetch_data: &fetch_data
       chmod +x ./scripts/fetch_kaggle_dataset.sh
       ./scripts/fetch_kaggle_dataset.sh
 
+tags_only: &tags_only
+  filters:
+    branches:
+      ignore: /.*/
+    tags:
+      only: /^.*/
+
 jobs:
   part_04_test_app:
     <<: *defaults
