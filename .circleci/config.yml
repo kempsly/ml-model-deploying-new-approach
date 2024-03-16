@@ -82,7 +82,10 @@ jobs:
           name: Publish model to Gemfury
           command: |
             tox -e publish_model
-
+      - run:
+          name: Unzip the dataset
+          command: |
+            unzip ./regression_model/datasets/house-prices-advanced-regression-techniques.zip -d ./regression_model/datasets
 
   part_05_deploy_app_container_via_railway:
     <<: *defaults
@@ -261,6 +264,7 @@ jobs:
             chmod +x ./scripts/publish_model.sh
             ./scripts/publish_model.sh ./packages/neural_network_model/
 
+
 workflows:
   version: 2
   deploy_pipeline:
@@ -277,12 +281,3 @@ workflows:
       # upload after git tags are created
       - part_04_test_and_upload_regression_model:
           <<: *tags_only
-          allowlist_externals:
-            - unzip
-
-      - part_05_deploy_app_container_via_railway:
-         filters:
-           branches:
-             only:
-               - main
-               - demo
