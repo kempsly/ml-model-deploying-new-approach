@@ -255,13 +255,12 @@ jobs:
             chmod +x ./scripts/publish_model.sh
             ./scripts/publish_model.sh ./packages/neural_network_model/
 
-
-tags_only: &tags_only
-  filters:
-    branches:
-      ignore: /.*/
-    tags:
-      only: /^.*/
+  tags_only: &tags_only
+    filters:
+      branches:
+        ignore: /.*/
+      tags:
+        only: /^.*/
 
 workflows:
   version: 2
@@ -279,6 +278,8 @@ workflows:
       # upload after git tags are created
       - part_04_test_and_upload_regression_model:
           <<: *tags_only
+          allowlist_externals:
+            - unzip
 
       - part_05_deploy_app_container_via_railway:
          filters:
@@ -286,5 +287,3 @@ workflows:
              only:
                - main
                - demo
-
-
