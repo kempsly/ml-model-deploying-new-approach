@@ -38,7 +38,7 @@ jobs:
           path: ~/project
       - *prepare_tox
       - run:
-          name: Runnning app tests
+          name: Running app tests
           command: |
             tox
 
@@ -81,7 +81,6 @@ jobs:
     <<: *defaults
     steps:
       - setup_remote_docker:
-          # Supported versions: https://circleci.com/docs/2.0/building-docker-images/#docker-version
           version: 20.10.18
       - checkout:
           path: ~/project/
@@ -90,7 +89,7 @@ jobs:
       - run: node --version
       - run: npm i -g @railway/cli
       - run:
-          name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
+          name: Build and run Dockerfile
           command: |
             cd part-05-deploying-with-containers && railway up --detach -s married-lunchroom -e production
 
@@ -185,7 +184,7 @@ jobs:
             pip install -r packages/ml_api/diff_test_requirements.txt
             PYTHONPATH=./packages/ml_api python3 packages/ml_api/tests/capture_model_predictions.py
       - run:
-          name: Runnning differential tests
+          name: Running differential tests
           command: |
             . venv/bin/activate
             pip install -r packages/ml_api/requirements.txt
@@ -254,13 +253,6 @@ jobs:
             . venv/bin/activate
             chmod +x ./scripts/publish_model.sh
             ./scripts/publish_model.sh ./packages/neural_network_model/
-
-  tags_only: &tags_only
-    filters:
-      branches:
-        ignore: /.*/
-      tags:
-        only: /^.*/
 
 workflows:
   version: 2
