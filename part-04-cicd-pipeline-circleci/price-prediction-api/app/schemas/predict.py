@@ -101,4 +101,3 @@ class MultipleHouseDataInputs(BaseModel):
                 ]
             }
         }
-        
