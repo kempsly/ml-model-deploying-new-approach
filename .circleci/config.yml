@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Deploy to Railway App (You must set RAILWAY_TOKEN env var)
           command: |
-            cd part-04-cicd-pipeline-circleci/price-prediction-api && railway up --detach
+            cd part-04-cicd-pipeline-circleci/price-prediction-api && railway up --detach -s married-lunchroom -e production
 
   part_04_test_and_upload_regression_model:
     <<: *defaults
@@ -92,7 +92,7 @@ jobs:
       - run:
           name: Build and run Dockerfile (see https://docs.railway.app/deploy/dockerfiles)
           command: |
-            cd part-05-deploying-with-containers && railway up --detach
+            cd part-05-deploying-with-containers && railway up --detach -s married-lunchroom -e production
 
   test_regression_model_py37:
     docker:
