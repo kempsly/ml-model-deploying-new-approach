@@ -10,6 +10,7 @@ fastapi
 httpx
 loguru
 uvicorn
+wheel
 ## Using the previous building package here
 tid-regression-model>=3.2.0
 # tid-regression-model==4.0.5
